@@ -64,15 +64,6 @@ export  default class ChatStore{
    }) 
   }  
  
-  @action.bound
-  getListOfUsers() {
-    this.list_of_users = [];
-    this.socket.on('nicknames',(data) => {
-      for (let i = 0; i < data.length;i++)
-      this.list_of_users.push(data[i]);
-    })
-  }  
- 
   
   @action.bound
   sendToServer(messsage) {  
@@ -81,8 +72,16 @@ export  default class ChatStore{
 
   @action.bound
   getDataFromsocket() {
+    //get messages
     this.socket.on('receive message', (data) => {
      this.list.push(data)
+    })
+    //get list of nicknames
+    this.socket.on('nicknames', (data) => {
+      console.log('list names', data)
+      this.list_of_users = [];
+      for (let i = 0; i < data.length; i++)
+        this.list_of_users.push(data[i]);
     })
   }
 

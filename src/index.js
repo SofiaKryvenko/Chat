@@ -30,9 +30,8 @@ io.on('connection', function (socket) {
       socket.nickname = user;
       nicknames.push(socket.nickname)
       console.log('nicknames array=',nicknames)
-      io.emit('nicknames', nicknames)
-    }
-    
+      updateNicknames()
+    }  
   })
   //all chatrooms
   socket.on('chatrooms', () => {})
@@ -47,9 +46,16 @@ io.on('connection', function (socket) {
     console.log('msg dd:', data)
     io.emit('receive message', data);
   })
+  //updating list of nicknames
+  function updateNicknames() {
+    io.emit('nicknames', nicknames);
+  }
   //disconection
   socket.on('disconnect', () => {
-    console.log('you are disconnected ! ')
+    console.log('you are disconnected !', socket.nickname);
+    if (!socket.nickname) return;
+    nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+    updateNicknames();
   })
 });
 
