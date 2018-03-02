@@ -63,7 +63,7 @@ export default class SendMessage extends Component{
                 }
               sheetSize={20}  
               set='twitter'
-            / >
+            />
           )}       
         </div>
          

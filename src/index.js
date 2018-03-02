@@ -6,6 +6,10 @@ const server = http.createServer(app);
 let currentApp = app;
 const io = require('socket.io')(server);
 
+
+var nicknames = [];
+
+
 io.on('connection', function (socket) {
 
   console.log('connection to server from serverChat', socket.id)
@@ -16,6 +20,19 @@ io.on('connection', function (socket) {
   //chatRoom leave
   socket.leave('leave room', (chatroom) => {
     io.emit('leave room',chatroom)
+  })
+  //new user
+  socket.on('new user', (user, callBack) => {
+    if (nicknames.indexOf(user) !== -1) {
+      callBack(false)
+    } else {
+      callBack(true)
+      socket.nickname = user;
+      nicknames.push(socket.nickname)
+      console.log('nicknames array=',nicknames)
+      io.emit('nicknames', nicknames)
+    }
+    
   })
   //all chatrooms
   socket.on('chatrooms', () => {})

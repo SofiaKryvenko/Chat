@@ -1,0 +1,52 @@
+.login_main_wrapper {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    .login_wrapper {
+        .login_title {
+            width: 100%;
+            font-weight: bold;
+            font-size: 25px;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .login_form_row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            .error_nickname{
+
+              color: red;
+              padding:8px 0 4px 0;
+            } 
+            label {
+                width: 100%;
+                display: inline-block;
+                padding-bottom: 10px;
+                text-align: center;
+            }
+            input {
+                outline: none;
+                border: none;
+                border-bottom: 1px solid #c9d5e8;
+                width: 50%;
+                padding-left: 3px;
+            }
+             ::-webkit-input-placeholder {
+                text-align: center;
+            }
+            button {
+                outline: none;
+                border: none;
+                background: #ff1c6f;
+                color: white;
+                font-weight: bold;
+                font-size: 14px;
+                padding: 7px 7px;
+                margin-top: 20px;
+            }
+        }
+    }
+}

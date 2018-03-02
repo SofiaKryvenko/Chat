@@ -1,4 +1,5 @@
-import { action, observable} from 'mobx'
+import { action, observable } from 'mobx'
+import uuid from 'uuid/v4'
 import io from 'socket.io-client';
 
 
@@ -10,25 +11,37 @@ export  default class ChatStore{
 
   @observable message = {
     text: '',
-    date: null,
-    user_id: null,
-    chat_Id:null
+    date: this.getDate(new Date(Date.now())),
+    sender:'',
+    user_id: uuid(),
   }
 
   @observable user = {
-    user_id: null,
+    user_id: uuid(),
     user_name:''
   }
+
+  @observable chat = {
+    name: "conversation_general",
+    messsages: [],
+    users: [],
+    chat_id: uuid(),
+    typing_users:[]
+  }
+
+  @observable error_nickname=''
+  @observable list_of_users=[]
   
   @action.bound
-  createRandomNickname = (len) => {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (var i = 0; i < len; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  handleChange(event: Event,obj) {
+    this[obj][event.target.name]=event.target.value
+    }  
+
+  getDate(date) {
+    return `${date.getHours()}:${('0'+date.getMinutes()).slice(-2)}`
   }
-  return text;
-};
+  
+
 
   
  @action.bound
@@ -39,8 +52,30 @@ export  default class ChatStore{
  }
   
   @action.bound
-  sendToServer(messsage) {
-    
+  addNewUser(nickname,history) {
+    this.socket.emit('new user', nickname, data => {
+      if (data) {
+        history.push({
+          pathname: '/chat',
+       })
+      } else {
+        this.error_nickname='That username is already taken !'
+     }
+   }) 
+  }  
+ 
+  @action.bound
+  getListOfUsers() {
+    this.list_of_users = [];
+    this.socket.on('nicknames',(data) => {
+      for (let i = 0; i < data.length;i++)
+      this.list_of_users.push(data[i]);
+    })
+  }  
+ 
+  
+  @action.bound
+  sendToServer(messsage) {  
     this.socket.emit('send message', messsage)
   }
 
