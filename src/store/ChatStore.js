@@ -29,8 +29,8 @@ export  default class ChatStore{
     typing_users:[]
   }
 
-  @observable error_nickname=''
-  @observable list_of_users=[]
+  @observable error_nickname = '';
+  @observable list_of_users = [];
   
   @action.bound
   handleChange(event: Event,obj) {
@@ -74,12 +74,12 @@ export  default class ChatStore{
   getDataFromsocket() {
     //get messages
     this.socket.on('receive message', (data) => {
-     this.list.push(data)
+      this.list.push(data);
     })
     //get list of nicknames
     this.socket.on('nicknames', (data) => {
-      console.log('list names', data)
       this.list_of_users = [];
+      console.log('list names', data)
       for (let i = 0; i < data.length; i++)
         this.list_of_users.push(data[i]);
     })

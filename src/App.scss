@@ -74,6 +74,14 @@ body {
                 .out_message_wrap {
                     max-width: 70%;
                     margin-top: 20px;
+                    .sender_info {
+                        display: flex;
+                        font-size: 14px;
+                        color: #b2b2ad;
+                        .send_time{
+                            padding-left: 10px;
+                        }
+                    }
                     .out-message {
                         background-color: #ffff56;
                         border-radius: 10px;
@@ -81,6 +89,7 @@ body {
                         font-size: 16px;
                         word-wrap: break-word;
                         flex: 0 0 auto;
+                        max-width: 70%;
                     }
                 }
             }

@@ -22,7 +22,7 @@ export default class ChatMessageContainer extends Component{
       return (
         <div className='chat_message_block'>
           <div className="message_container" id='message_block'>
-            {list.map((message, index) => <Message key={index} message={message} />)}           
+            {list.map((message,index) => <Message key={index} message={message} />)}           
           </div>  
           <SendMessage />
         </div>
