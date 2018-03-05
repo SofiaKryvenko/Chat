@@ -12,14 +12,25 @@ import './login.scss'
 @observer  
 export default class Login extends Component{
 
-  @observable nickname=''
+  @observable nickname = '';
+  @observable err=''
+  
 
   handleSubmit(event: Event,history) {
     const { addNewUser } = this.props.chat;
     event.preventDefault();
+    if(this.checkNickName(this.nickname)){
     addNewUser(this.nickname, history);
-    this.nickname = '';
-}
+      this.nickname = '';
+    }
+    else {
+      this.err='Your nickname must contains only letters and numbers.'
+    }
+  }
+
+  checkNickName(name) {
+    return /^[0-9a-zA-Z]+$/.test(name) && name !== '' ? true : false
+  }
 
   render() {
     const {  error_nickname} = this.props.chat;
@@ -37,11 +48,14 @@ export default class Login extends Component{
                 name='user_name'
                 placeholder="your nickname is ..."
                 value={this.nickname}
-                onChange={(event)=>{this.nickname=event.target.value}}
+                onChange={(event) => {
+                  this.nickname = event.target.value;
+                  this.err=''
+                }}
               />
             </div>
-            {error_nickname && (<div className="login_form_row">
-              <div className="error_nickname">{error_nickname}</div>
+            {(error_nickname||this.err) && (<div className="login_form_row">
+              <div className="error_nickname">{error_nickname}{ this.err}</div>
             </div>)} 
             
             <div className="login_form_row">

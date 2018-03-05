@@ -9,28 +9,29 @@ export  default class ChatStore{
   @observable socket = io.connect('http://localhost:3000');
   @observable list = []
 
-  @observable message = {
-    text: '',
-    date: this.getDate(new Date(Date.now())),
-    sender:'',
-    user_id: uuid(),
-  }
+  // @observable message = {
+  //   text: '',
+  //   date: this.getDate(new Date(Date.now())),
+  //   sender:'',
+  //   user_id: uuid(),
+  // }
 
-  @observable user = {
-    user_id: uuid(),
-    user_name:''
-  }
+  // @observable user = {
+  //   user_id: uuid(),
+  //   user_name:''
+  // }
 
-  @observable chat = {
-    name: "conversation_general",
-    messsages: [],
-    users: [],
-    chat_id: uuid(),
-    typing_users:[]
-  }
+  // @observable chat = {
+  //   name: "conversation_general",
+  //   messsages: [],
+  //   users: [],
+  //   chat_id: uuid(),
+  //   typing_users:[]
+  // }
 
   @observable error_nickname = '';
   @observable list_of_users = [];
+  @observable list_of_rooms = [];
   
   @action.bound
   handleChange(event: Event,obj) {
@@ -50,6 +51,13 @@ export  default class ChatStore{
      console.log('connection to server chatStore')
    })
  }
+ 
+  @action.bound
+  clientDisconnection() {
+    this.socket.on('user disconnect', (id) => {
+      console.log('disconnection to server chatStore',id)
+    }) 
+ }  
   
   @action.bound
   addNewUser(nickname,history) {
@@ -64,11 +72,16 @@ export  default class ChatStore{
    }) 
   }  
  
-  
+  //send message to server
   @action.bound
   sendToServer(messsage) {  
     this.socket.emit('send message', messsage)
   }
+
+  @action.bound
+  createNewChatRoom(roomName) {
+    this.socket.emit('create room',roomName)
+  }  
 
   @action.bound
   getDataFromsocket() {
@@ -83,6 +96,13 @@ export  default class ChatStore{
       for (let i = 0; i < data.length; i++)
         this.list_of_users.push(data[i]);
     })
+    // when user disconnect by itself -dont work(
+    // this.socket.emit('disconnect', user => {
+    //   console.log('user that disconnect =', user)
+    // })
   }
+
+  
+
 
 }

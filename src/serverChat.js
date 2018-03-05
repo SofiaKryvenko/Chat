@@ -7,28 +7,31 @@ class ChatServer {
 
   createConnection(io) {  
 
+    const users = {};
 
-    var nicknames = [];
    io.on('connection', function (socket) {
 
   console.log('connection to server from serverChat', socket.id)
-  //chatRoom join
-  socket.join('join to room', (chatroom) => {
-    io.emit('join to room',chatroom)
-  })
+  //create new chat room
+    socket.on('create room', room => {
+    console.log('create room=',room)
+    socket.join(room)
+  })   
+ 
   //chatRoom leave
-  socket.leave('leave room', (chatroom) => {
-    io.emit('leave room',chatroom)
-  })
+  
+  
+     
   //new user
   socket.on('new user', (user, callBack) => {
-    if (nicknames.indexOf(user) !== -1) {
+    if (user in users) {
       callBack(false)
     } else {
       callBack(true)
       socket.nickname = user;
-      nicknames.push(socket.nickname)
-      console.log('nicknames array=',nicknames)
+      users[socket.nickname] = socket;
+
+      console.log('users array=',users)
       updateNicknames()
     }  
   })
@@ -39,24 +42,34 @@ class ChatServer {
   //typing
   socket.on('typing', () => { })
   //stop typing
-  socket.on('stop typing',()=>{})
+     socket.on('stop typing', () => { })
+  
+     
   //simple send message
   socket.on('send message', (data) => {
     console.log('msg dd:', data,'user',socket.nickname)
     io.emit('receive message', {
       message: data,
-      user: socket.nickname
+      user: socket.nickname,
+      date: new Date(Date.now())
     });
   })
+  //privat message
+     socket.on('send privat message', (to, fromUser, message) => {
+       console.log('to=', to, 'fromUser', fromUser, 'message=', message)
+       io.to().emit('privat messag',message)
+  })   
   //updating list of nicknames
   function updateNicknames() {
-    io.emit('nicknames', nicknames);
+    io.emit('nicknames',Object.keys(users));
   }
   //disconection
+  //dont work on click   
   socket.on('disconnect', () => {
     console.log('you are disconnected !', socket.nickname);
     if (!socket.nickname) return;
-    nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+    delete users[socket.nickname]
+    io.emit('user disconnect', socket.nickname)
     updateNicknames();
   })
 });

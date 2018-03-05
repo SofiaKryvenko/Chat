@@ -1,7 +1,10 @@
 .leftpanel_main_container {
     background: #ffe2ec;
     .users_online_wrapper {
+        position: relative;
         .users_online_title {
+            position: absolute;
+            width: 100%;
             text-align: center;
             font-size: 16px;
             font-weight: 700;
@@ -11,11 +14,65 @@
             box-shadow: 0px 15px 10px -15px rgba(0, 0, 0, 0.13);
         }
         .user_list_block {
+            padding-top: 50px;
+            height: 300px;
+            overflow: auto;
             .user_online {
                 padding: 4px;
                 font-weight: 500;
                 font-size: 16px;
             }
         }
+    }
+    .conversation_main_wrapper {
+        .create_conversation {
+            padding: 9px 5px;
+            cursor: pointer;
+            img {
+                height: 20px;
+                width: 20px;
+                margin-right: 5px;
+            }
+            &:hover {
+                font-weight: bold;
+            }
+        }
+        .conversation_title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 15px 0;
+            border-bottom: 1px solid #c9d5e8;
+            background: #fffd99;
+            box-shadow: 0px 15px 10px -15px rgba(0, 0, 0, 0.13);
+        }
+    }
+}
+
+.create_new_conversation {
+    position: absolute;
+    top: 15%;
+    width: 300px;
+    background: white;
+    padding: 10px 10px 30px 10px;
+    border-radius: 10px;
+    .modal_row {
+        padding: 0 15px !important;
+        .input_bottom_border {
+            width: 100% !important;
+        }
+    }
+    .rowPopup{
+        justify-content: center;
+    } 
+    button {
+        outline: none;
+        border: none;
+        background: #ff1c6f;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 7px 7px;
+        margin-top: 20px;
     }
 }

@@ -20,6 +20,16 @@ body {
             display: flex;
             justify-content: center;
             border-bottom: 1px solid #c9d5e8;
+            position: relative;
+            align-items: center;
+            .log_out_wrapper {
+                position: absolute;
+                right: 25px;
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
+                }
+            }
             .title_wrap {
                 .title_name {
                     font-size: 24px;
@@ -78,7 +88,7 @@ body {
                         display: flex;
                         font-size: 14px;
                         color: #b2b2ad;
-                        .send_time{
+                        .send_time {
                             padding-left: 10px;
                         }
                     }
@@ -93,6 +103,17 @@ body {
                     }
                 }
             }
+        }
+    }
+    .input_bottom_border {
+            outline: none;
+            border: none;
+            border-bottom: 1px solid #c9d5e8;
+            width: 50%;
+            padding-left: 3px;
+    
+         ::-webkit-input-placeholder {
+            text-align: center;
         }
     }
 }
