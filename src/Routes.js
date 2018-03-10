@@ -3,11 +3,11 @@ import { Switch, Route } from 'react-router-dom'
 
 //components
 import ChatContainer from './components/chat/index'
-import Login from './components/login/index'
+import Auth from './components/auth/index'
 
 const Routes = () => (
   <Switch>
-    <Route path="/" component={Login} exact />
+    <Route path="/" component={Auth} exact />
     <Route path="/chat" component={ChatContainer}  />
   </Switch>
 )

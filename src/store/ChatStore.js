@@ -7,27 +7,6 @@ export  default class ChatStore{
  
   @observable socket = io.connect('http://localhost:3000');
   @observable list = []
-
-  // @observable message = {
-  //   text: '',
-  //   date: this.getDate(new Date(Date.now())),
-  //   sender:'',
-  //   user_id: uuid(),
-  // }
-
-  // @observable user = {
-  //   user_id: uuid(),
-  //   user_name:''
-  // }
-
-  // @observable chat = {
-  //   name: "conversation_general",
-  //   messsages: [],
-  //   users: [],
-  //   chat_id: uuid(),
-  //   typing_users:[]
-  // }
-
   @observable error_nickname = '';
   @observable list_of_users = [];
   @observable list_of_rooms = [];
