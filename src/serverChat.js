@@ -29,10 +29,9 @@ class ChatServer {
     } else {
       callBack(true)
       socket.nickname = user;
-      users[socket.nickname] = socket;
-
+      users[socket.nickname] = socket.id;
       console.log('users array=',users)
-      updateNicknames()
+      updateUsers()
     }  
   })
   //all chatrooms
@@ -55,13 +54,18 @@ class ChatServer {
     });
   })
   //privat message
-     socket.on('send privat message', (to, fromUser, message) => {
-       console.log('to=', to, 'fromUser', fromUser, 'message=', message)
-       io.to().emit('privat messag',message)
+     socket.on('send privat message', (to,fromUser , message) => {
+       console.log('to=', to, 'message=', message)
+       if (to in users) {
+         io.to(to).emit('to', {
+           message: message,
+           sender:fromUser
+         });
+       }
   })   
   //updating list of nicknames
-  function updateNicknames() {
-    io.emit('nicknames',Object.keys(users));
+  function updateUsers() {
+    io.emit('nicknames', Object.keys(users));
   }
   //disconection
   //dont work on click   
@@ -70,7 +74,7 @@ class ChatServer {
     if (!socket.nickname) return;
     delete users[socket.nickname]
     io.emit('user disconnect', socket.nickname)
-    updateNicknames();
+    updateUsers();
   })
 });
   }

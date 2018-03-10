@@ -13,9 +13,7 @@ export default class TitleBlock extends Component{
         <div className="title_wrap">
         <p className="title_name">Convervation name</p>  
         </div>
-        <div className="log_out_wrapper" onClick={(event) =>
-          {console.log('click to disconnect work')
-          clientDisconnection()}}>
+        <div className="log_out_wrapper" onClick={(event) =>{clientDisconnection()}}>
           <p>Log Out</p>
         </div>  
       </div>

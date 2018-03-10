@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from 'react'
+import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { observable,action } from 'mobx'
 //scss
@@ -7,6 +7,7 @@ import './leftPanel.scss'
 import new_chat from '../../assets/img/plus_msg.png'
 //components
 import Modal from '../modal'
+import UsersOnline from './UsersOnline'
 
 @inject('chat')
 @observer 
@@ -34,11 +35,7 @@ export default class LeftPanel extends Component{
   }
 
   render() {
-    const { list_of_users }=this.props.chat
-    return (
-      <Fragment>
-              
-       
+    return (   
         <div className='leftpanel_main_container'>
           {this.isModal && (<Modal
             modalHeader='Create new conversation'
@@ -61,32 +58,20 @@ export default class LeftPanel extends Component{
               <div className="rowPopup">
                 <button type='submit'>Create chat</button>
               </div>
-            </form>  
-           
-              
+            </form>            
           </Modal>)}     
-        <div className="users_online_wrapper">
-          <div className="users_online_title">Users online</div>
-          <div className="user_list_block">
-            {
-              list_of_users.map((user, index) => {
-                return <div key={user+index} className='user_online'>{user}</div> 
-             }) 
-           }
-          </div>  
-        </div>
+          <UsersOnline />
         <div className="conversation_main_wrapper">
           <div className="conversation_title">All conversation</div>
           <div className="create_conversation" onClick={(event) => {
               this.openModal();
-            // createNewChatRoom('newRoom')
           }}>
             <img src={new_chat} alt=""/>
             Create conversation</div>
           <div className="conversation_list_block"></div>
         </div>
         </div>
-      </Fragment>  
+ 
     )
   }
 }

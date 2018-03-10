@@ -1,5 +1,4 @@
 import { action, observable } from 'mobx'
-import uuid from 'uuid/v4'
 import io from 'socket.io-client';
 
 
@@ -43,7 +42,6 @@ export  default class ChatStore{
   }
   
 
-
   
  @action.bound
  clientConnection() {  
@@ -79,6 +77,11 @@ export  default class ChatStore{
   }
 
   @action.bound
+  sendPrivatMessage(to,fromUser,msg) {
+    this.socket.emit('send privat message',to,fromUser,msg)
+  }  
+
+  @action.bound
   createNewChatRoom(roomName) {
     this.socket.emit('create room',roomName)
   }  
@@ -89,6 +92,9 @@ export  default class ChatStore{
     this.socket.on('receive message', (data) => {
       this.list.push(data);
     })
+    this.socket.on('to', data => {
+      console.log('privat',data)
+    })
     //get list of nicknames
     this.socket.on('nicknames', (data) => {
       this.list_of_users = [];
@@ -96,10 +102,6 @@ export  default class ChatStore{
       for (let i = 0; i < data.length; i++)
         this.list_of_users.push(data[i]);
     })
-    // when user disconnect by itself -dont work(
-    // this.socket.emit('disconnect', user => {
-    //   console.log('user that disconnect =', user)
-    // })
   }
 
   
