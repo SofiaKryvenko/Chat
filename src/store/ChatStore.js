@@ -1,33 +1,12 @@
 import { action, observable } from 'mobx'
 import io from 'socket.io-client';
+//
 
 
+export default class ChatStore{
 
-export  default class ChatStore{
- 
   @observable socket = io.connect('http://localhost:3000');
   @observable list = []
-
-  // @observable message = {
-  //   text: '',
-  //   date: this.getDate(new Date(Date.now())),
-  //   sender:'',
-  //   user_id: uuid(),
-  // }
-
-  // @observable user = {
-  //   user_id: uuid(),
-  //   user_name:''
-  // }
-
-  // @observable chat = {
-  //   name: "conversation_general",
-  //   messsages: [],
-  //   users: [],
-  //   chat_id: uuid(),
-  //   typing_users:[]
-  // }
-
   @observable error_nickname = '';
   @observable list_of_users = [];
   @observable list_of_rooms = [];
@@ -41,7 +20,7 @@ export  default class ChatStore{
     return `${date.getHours()}:${('0'+date.getMinutes()).slice(-2)}`
   }
   
-
+ 
   
  @action.bound
  clientConnection() {  
@@ -57,18 +36,7 @@ export  default class ChatStore{
     }) 
  }  
   
-  @action.bound
-  addNewUser(nickname,history) {
-    this.socket.emit('new user', nickname, data => {
-      if (data) {
-        history.push({
-          pathname: '/chat',
-       })
-      } else {
-        this.error_nickname='That username is already taken !'
-     }
-   }) 
-  }  
+ 
  
   //send message to server
   @action.bound
@@ -89,19 +57,19 @@ export  default class ChatStore{
   @action.bound
   getDataFromsocket() {
     //get messages
-    this.socket.on('receive message', (data) => {
-      this.list.push(data);
-    })
-    this.socket.on('to', data => {
-      console.log('privat',data)
-    })
+    // this.socket.on('receive message', (data) => {
+    //   this.list.push(data);
+    // })
+    // this.socket.on('to', data => {
+    //   console.log('privat',data)
+    // })
     //get list of nicknames
-    this.socket.on('nicknames', (data) => {
-      this.list_of_users = [];
-      console.log('list names', data)
-      for (let i = 0; i < data.length; i++)
-        this.list_of_users.push(data[i]);
-    })
+    // this.socket.on('nicknames', (data) => {
+    //   this.list_of_users = [];
+    //   console.log('list names', data)
+    //   for (let i = 0; i < data.length; i++)
+    //     this.list_of_users.push(data[i]);
+    // })
   }
 
   
