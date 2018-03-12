@@ -7,7 +7,7 @@ const routes = (app) => {
   // })
 
   app.post('/api/user', (req, res) => {
-    console.log('req=', req.body, 'res=', res)
+    console.log('req=', req.body)
     res.send('ok!')
     // const newUser = new User(req.body)
   })

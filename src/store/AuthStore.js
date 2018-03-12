@@ -20,7 +20,7 @@ export default class AuthStore {
 
   @action.bound
   async signUp() {
-    const { response } = await axios.post('api/user', this.user);
+    const { response } = await axios.post('/api/user', this.user);
     console.log(response)
     // console.log('wow',this.user)
   }

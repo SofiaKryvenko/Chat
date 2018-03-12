@@ -21,19 +21,22 @@ socketServer.createConnection(io)
 
 //MONGOOSE (MONGO_DB)
 //process.env.MONGO_ATLAS_PW=chat
-mongoose.connect('mongodb+srv://chat:' + process.env.RAZZLE_MONGO_ATLAS_PW + '@chat-kdylc.mongodb.net/test',);
-
-//requests for bd
-routes(app);
-
-
-server.listen(process.env.PORT || 3000, (error) => {
-  if (error) {
-    console.log(error)
+mongoose.connect('mongodb+srv://chat:' + process.env.RAZZLE_MONGO_ATLAS_PW + '@chat-kdylc.mongodb.net/test', (err) => {
+  if (!err) {
+    //requests for bd
+    routes(app);
+    server.listen(process.env.PORT || 3000, (error) => {
+      if (error) {
+        console.log(error)
+      }
+      console.log('🚀 started')
+    });
+  } else {
+    return console.log('error with mongoDB=',err)
   }
-  
-  console.log('🚀 started')
 });
+
+
 
 // if (module.hot) {
 //   console.log('✅  Server-side HMR Enabled!');
