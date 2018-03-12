@@ -7,8 +7,7 @@ class ChatServer {
 
   createConnection(io) {  
 
-    const users = {};
-
+  const users = {};
    io.on('connection', function (socket) {
 
   console.log('connection to server from serverChat', socket.id)

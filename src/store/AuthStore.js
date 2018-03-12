@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx'
 //
-import User from '../mongo/SchemaUser'
+// import User from '../mongo/SchemaUser'
 
 
 export default class AuthStore {
