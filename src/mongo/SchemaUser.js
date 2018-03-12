@@ -1,13 +1,12 @@
 import mongoose from 'mongoose'
 
+//CREATE USER MODEL IN DB
 const Schema = mongoose.Schema;
-const Model = mongoose.Model;
-//CREATE USER
 const userSchema = new Schema({
-  _id:mongoose.Types.ObjectId,
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
+  username: String,
+  email: String,
   password: String,
-})
-const User = new Model('User', userSchema);
+});
+
+const User = mongoose.model('User', userSchema);
 export default User;
