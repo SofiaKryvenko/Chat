@@ -1,12 +1,19 @@
-import express from 'express'
-const router = express.Router();
+// import User from './SchemaUser'
 
-// export default class Request{
-// }
+const routes = (app) => {
 
-router.post('/user', (req, res) => {
+  
+  // app.get('/api/user', (req, res) => {
+  // })
 
-})
-router.get('/user', (req, res) => {
+  app.post('/api/user', (req, res) => {
+    console.log('req=', req.body, 'res=', res)
+    res.send('ok!')
+    // const newUser = new User(req.body)
+  })
+}
 
-})
+export default routes
+
+
+

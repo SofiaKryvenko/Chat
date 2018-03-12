@@ -1,6 +1,7 @@
 import { action, observable } from 'mobx'
+import axios from 'axios'
 //
-// import User from '../mongo/SchemaUser'
+
 
 
 export default class AuthStore {
@@ -18,8 +19,10 @@ export default class AuthStore {
 
 
   @action.bound
-  signUp() {
-
+  async signUp() {
+    const { response } = await axios.post('api/user', this.user);
+    console.log(response)
+    // console.log('wow',this.user)
   }
 
 }
