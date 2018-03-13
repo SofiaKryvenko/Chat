@@ -2,6 +2,7 @@ import app from './server';
 import http from 'http';
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import session from 'express-session'
 //
@@ -9,17 +10,19 @@ import ChatServer from './serverChat'
 import routes from './mongo/Request';
 
 
-
+// const MongoStore = require('connect-mongo')(session);
 const server = http.createServer(app);
 // let currentApp = app;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 //session
 app.use(session({
   secret:process.env.RAZZLE_SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true,  //This will ensure the sessions are saved.
+  // store: new MongoStore({})
 }))
 // Passport:
 app.use(passport.initialize());
@@ -33,7 +36,7 @@ socketServer.createConnection(io)
 //MONGOOSE (MONGO_DB)
 //process.env.MONGO_ATLAS_PW=chat
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://chat:' + process.env.RAZZLE_MONGO_ATLAS_PW + '@chat-kdylc.mongodb.net/test', (err) => {
+mongoose.connect('mongodb+srv://chat:' + process.env.RAZZLE_MONGO_ATLAS_PW + '@chat-kdylc.mongodb.net/chat', (err) => {
   if (!err) {
     //requests for bd
     routes(app);
