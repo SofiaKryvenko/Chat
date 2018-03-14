@@ -30,7 +30,7 @@ const routes = (app) => {
     newUser.save((err, save_user) => {
       if (err) {
         console.log(err);
-        return res.status(500).send();
+        return res.status(500).send('problem with bd');
       } else {
         return res.status(200).send('ok!add new user')
       }

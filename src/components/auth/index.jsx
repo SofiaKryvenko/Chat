@@ -15,7 +15,6 @@ export default class Auth extends Component {
     return (
       <div className='auth_main_wrapper'>
         <div className='auth_wrapper'>
-          <div className="auth_title">Welcome</div>
           <SignUp />
         </div>
       </div>

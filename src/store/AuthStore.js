@@ -19,10 +19,13 @@ export default class AuthStore {
 
 
   @action.bound
-  async signUp() {
-    const { response } = await axios.post('/api/user', this.user);
-    console.log(response)
-    // console.log('wow',this.user)
+  async signUp(history) {
+    const { status } = await axios.post('/api/user', this.user);
+    if (status === 200) {
+      history.push({
+        pathname:'/chat'
+      })
+    }
   }
 
 }

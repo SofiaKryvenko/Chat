@@ -1,5 +1,6 @@
 import app from './server';
 import http from 'http';
+import mongo from 'mongodb'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -36,7 +37,9 @@ socketServer.createConnection(io)
 //MONGOOSE (MONGO_DB)
 //process.env.MONGO_ATLAS_PW=chat
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://chat:' + process.env.RAZZLE_MONGO_ATLAS_PW + '@chat-kdylc.mongodb.net/chat', (err) => {
+mongoose.connect('mongodb://chat:'
+  + process.env.RAZZLE_MONGO_ATLAS_PW +
+  '@chat-shard-00-00-kdylc.mongodb.net:27017,chat-shard-00-01-kdylc.mongodb.net:27017,chat-shard-00-02-kdylc.mongodb.net:27017/test?ssl=true&replicaSet=chat-shard-0&authSource=admin', (err) => {
   if (!err) {
     //requests for bd
     routes(app);
