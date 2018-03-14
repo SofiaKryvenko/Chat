@@ -22,10 +22,13 @@ userSchema.pre('save', function (next) {
 });
 
 // checking if password is valid(use for login)
-userSchema.methods.validPassword = function (password) {
-  return bcrypt.compare(password, this.password);
+userSchema.methods.validPassword = function (password,hash) {
+  return bcrypt.compare(password, hash);
 };
 
 
+userSchema.methods.getUserById = function (id, callback) {
+  User.findById(id, callback);
+}
 const User = mongoose.model('User', userSchema);
 export default User;

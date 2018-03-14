@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx'
+import { action, observable, runInAction } from 'mobx'
 import axios from 'axios'
 //
 
@@ -9,7 +9,12 @@ export default class AuthStore {
   @observable user = {
     username: '',
     email: '',
-    password: ''
+    password: '',
+  }
+
+  @observable login_data = {
+    username: '',
+    password: '',
   }
 
   @action.bound
@@ -22,10 +27,20 @@ export default class AuthStore {
   async signUp(history) {
     const { status } = await axios.post('/api/user', this.user);
     if (status === 200) {
+      runInAction( () => {
+        this.user.username = '';
+        this.user.email = '';
+        this.user.password = '';  
+      });
       history.push({
         pathname:'/chat'
       })
     }
+  }
+
+  @action.bound
+  async signIn() {
+    const { status } = await axios.post('/api/login', this.login_data);
   }
 
 }
