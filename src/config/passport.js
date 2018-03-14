@@ -5,10 +5,27 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const passport_config = (passport) => {
    
-  // passport.use('signup', new LocalStrategy({
-   
-  // }
-  // ));
+  passport.use('signup', new LocalStrategy({ passReqToCallback: true },
+    function (req, username, password, done) {
+      process.nextTick(() => {
+        User.findOne({ username: username }, (err, user) => {
+          if (err) { return done(err) }
+          if (user) {
+            return done(null, false, {signupMessage: 'That email is already taken.'})
+          } else {
+            const newUser = new User();
+            newUser.username = username;
+            newUser.password = password;
+            newUser.save((err) => {
+              if (err)
+                throw err;
+              return done(null, newUser);
+            })
+          }
+        })      
+       })
+    }
+  ));
 
   passport.use('login', new LocalStrategy({ passReqToCallback: true },
     function (req, username, password, done) {
@@ -40,7 +57,8 @@ const passport_config = (passport) => {
     });
   });
 
- }
+}
+ 
 export default passport_config
 
 

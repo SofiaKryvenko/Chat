@@ -24,7 +24,7 @@ export default class SignUp extends Component {
         <form onSubmit={(event) => this.onSignUp(event)}>
           <div className="login_form_row">
             <input
-              required  
+              // required  
               name='email'
               type="email"
               value={user.email}
@@ -35,7 +35,7 @@ export default class SignUp extends Component {
           </div>
           <div className="login_form_row">
             <input
-              required  
+              // required  
               name='username'
               type="text"
               value={user.username}
@@ -46,7 +46,7 @@ export default class SignUp extends Component {
           </div>
           <div className="login_form_row">
             <input
-              required  
+              // required  
               name='password'
               type="password"
               value={user.password}

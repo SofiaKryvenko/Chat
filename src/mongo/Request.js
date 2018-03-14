@@ -10,21 +10,20 @@ const routes = (app,passport) => {
 
   //USE FOR LOGIN=================
 
-  app.post('/api/login', passport.authenticate('login', {
-      successRedirect: '/chat',
+  app.post('/api/login', passport.authenticate('login',
+    {
       failureRedirect: '/signin',
       failureFlash: true
     }),
-    function (req, res) {
-      res.redirect('/users/' + req.user.username);
-    });
+
+  );
   
  //USE FOR REGISTRATION===================
   
-  // app.post('/api/user', passport.authenticate('signup', {
-  //   failureRedirect: '/',
-  //   failureFlash: true
-  // }))
+  app.post('/api/signup', passport.authenticate('signup', {
+    failureRedirect: '/',
+    failureFlash: true
+  }))
   
   //LOG_OUT========================
 
@@ -36,24 +35,6 @@ const routes = (app,passport) => {
 }
 
 export default routes
-
-
-// app.post('/api/login', (req, res) => {
-//   const password = req.body.password;
-//   const username = req.body.username;
-//   User.findOne({ username: username, password: password }, (err, user) => {
-//     if (err) {
-//       console.log(err);
-//       return res.status(500).send();
-//     }
-//     else if (!user) {
-//       return res.status(404).send()
-//     }
-//     else {
-//       return res.status(200).send('ok!login')
-//     }
-//   })
-// })
 
 
 // app.post('/api/user', (req, res) => {
