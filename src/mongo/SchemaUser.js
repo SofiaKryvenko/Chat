@@ -12,7 +12,7 @@ const userSchema = new Schema({
 //hashing a password before saving it to the database
 userSchema.pre('save', function (next) {
   var user = this;
-  bcrypt.hash(user.password, 10, function (err, hash) {
+  bcrypt.hash(user.password, bcrypt.genSalt(10), function (err, hash) {
     if (err) {
       return next(err);
     }
@@ -22,13 +22,10 @@ userSchema.pre('save', function (next) {
 });
 
 // checking if password is valid(use for login)
-userSchema.methods.validPassword = function (password,hash) {
-  return bcrypt.compare(password, hash);
+userSchema.methods.validPassword= (password,hash)=> {
+  return bcrypt.compare(password, this.password);
 };
 
 
-userSchema.methods.getUserById = function (id, callback) {
-  User.findById(id, callback);
-}
 const User = mongoose.model('User', userSchema);
 export default User;

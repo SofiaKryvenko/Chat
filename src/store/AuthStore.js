@@ -52,4 +52,14 @@ export default class AuthStore {
     }
   }
 
+  @action.bound
+  async logOut(history) {
+    const { status } = await axios.get('/api/logout')
+    if (status === 200) {
+      history.push({
+        pathname: '/signin'
+      })
+    }
+  }
+
 }
