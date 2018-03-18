@@ -8,7 +8,6 @@ export default class AuthStore {
 
   @observable user = {
     username: '',
-    email: '',
     password: '',
   }
 
@@ -16,6 +15,8 @@ export default class AuthStore {
     username: '',
     password: '',
   }
+
+  @observable errors={}
 
   @action.bound
   handleChange(event: Event, obj) {
@@ -25,41 +26,67 @@ export default class AuthStore {
 
   @action.bound
   async signUp(history) {
-    const { status } = await axios.post('/api/signup', this.user);
-    if (status === 200) {
-      runInAction( () => {
-        this.user.username = '';
-        this.user.email = '';
-        this.user.password = '';  
-      });
-      history.push({
-        pathname:'/chat'
-      })
+    try {
+      const { status, data } = await axios.post('/api/signup', this.user);
+      if (status === 200) {
+        runInAction(() => {
+          this.clearObjData(this.user)
+        });
+        history.push({
+          pathname: '/chat'
+        })
+      } else if (status === 404) {
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
     }
+
   }
 
   @action.bound
   async signIn(history) {
-    const { status } = await axios.post('/api/login', this.login_data);
-    if (status === 200) {
-      runInAction(() => {
-        this.login_data.username = '';
-        this.login_data.password = '';
-      });
-      history.push({
-        pathname: '/chat'
-      })
+    try {
+      const { status, data,response } = await axios.post('/api/login', this.login_data);
+      if (status === 200) {
+        runInAction(() => {
+          this.clearObjData(this.login_data)
+        });
+        history.push({
+          pathname: '/chat'
+        })
+      }
+      else if (status === 403) {
+        console.log(response);
+        console.log('error with log in');
+        
+      }
+    } catch (error) {
+      console.log(error)
     }
+    
   }
 
   @action.bound
   async logOut(history) {
-    const { status } = await axios.get('/api/logout')
-    if (status === 200) {
-      history.push({
-        pathname: '/signin'
-      })
+    try {
+      const { status } = await axios.get('/api/logout')
+      if (status === 200) {
+        history.push({
+          pathname: '/signin'
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    } 
+  }
+
+
+  clearObjData(obj) {
+    for (let key in obj) {
+      obj[key]=''
     }
   }
 
 }
+

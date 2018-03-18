@@ -6,7 +6,6 @@ import SignUp from './SignUp'
 //scss
 import './login.scss'
 
-
 @withRouter
 @inject('chat')
 @observer

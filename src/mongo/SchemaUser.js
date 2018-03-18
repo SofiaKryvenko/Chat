@@ -12,7 +12,7 @@ const userSchema = new Schema({
 //hashing a password before saving it to the database
 userSchema.pre('save', function (next) {
   var user = this;
-  bcrypt.hash(user.password, bcrypt.genSalt(10), function (err, hash) {
+  bcrypt.hash(user.password, 10, function (err, hash) {
     if (err) {
       return next(err);
     }
@@ -22,8 +22,10 @@ userSchema.pre('save', function (next) {
 });
 
 // checking if password is valid(use for login)
-userSchema.methods.validPassword= (password,hash)=> {
-  return bcrypt.compare(password, this.password);
+userSchema.methods.validPassword = (password,hash) => {
+  const a = bcrypt.compareSync(password,hash)
+  console.log('thisHash=', hash, 'password', password,'compare=',a )
+  return bcrypt.compareSync(password,hash);
 };
 
 

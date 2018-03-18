@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { withRouter} from 'react-router-dom'
+import { withRouter,Link} from 'react-router-dom'
 
 @withRouter
 @inject('auth')
 @observer
 export default class SignIn extends Component{
-
   onSignIn(event: Event) {
-    const { signIn } =  this.props.auth
+    const { signIn } = this.props.auth
+    const { history } = this.props
     event.preventDefault();
-    signIn();
+    signIn(history);
   }
 
   render() {
@@ -43,8 +43,16 @@ export default class SignIn extends Component{
           <div className="login_form_row">
           <button type='submit'>Sign In</button>
         </div>
-      </form>
-      </div></div>
+        </form>
+        <div className="login_form_row">
+          <div className='is_sign_in'>Need an account?
+            <Link to='/'>
+              <span> Sign Up</span>
+            </Link>
+          </div>
+        </div>  
+      </div>
+    </div>
     )
   }
 }
