@@ -4,7 +4,15 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    background-image: url('../../assets/img/pexels-photo-281490.jpeg');
+    background-position: center;
+    background-size: cover; // background-repeat: no-repeat;
     .auth_wrapper {
+        
+            background: rgba(58, 153, 65, 0.342);
+            padding: 10px;
+            border-radius:20px; 
+        
         .auth_title {
             width: 100%;
             font-weight: bold;
@@ -52,7 +60,7 @@
             .is_sign_in {
                 font-size: 12px;
                 color: rgb(129, 141, 137);
-                a{
+                a {
                     text-decoration: none;
                 }
                 span {

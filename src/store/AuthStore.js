@@ -47,21 +47,22 @@ export default class AuthStore {
   @action.bound
   async signIn(history) {
     try {
-      const { status, data,response } = await axios.post('/api/login', this.login_data);
+      const { status, data } = await axios.post('/api/login', this.login_data)
+      console.log(status,"status")
       if (status === 200) {
+        console.log('data=',data)
         runInAction(() => {
           this.clearObjData(this.login_data)
         });
         history.push({
           pathname: '/chat'
         })
-      }
-      else if (status === 403) {
-        console.log(response);
+      }else if (status === 403) {
+        console.log(data);
         console.log('error with log in');
         
       }
-    } catch (error) {
+    } catch (error) {   
       console.log(error)
     }
     

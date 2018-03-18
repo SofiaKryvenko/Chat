@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { withRouter,Link} from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
+//img 
+import bg from '../../assets/img/pexels-photo-399161.jpeg'
 
 @withRouter
 @inject('auth')
@@ -17,7 +19,10 @@ export default class SignIn extends Component{
     const { handleChange } = this.props.auth
     return (<div className='auth_main_wrapper'>
       <div className='auth_wrapper'>
-        <form onSubmit={(event) => {
+        <div className="auth_title">LOG IN</div>  
+        <form
+          className='auth_form'  
+          onSubmit={(event) => {
           this.onSignIn(event)
         }}>
           <div className="login_form_row">

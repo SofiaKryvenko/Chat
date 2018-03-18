@@ -10,7 +10,7 @@ import ChatServer from './serverChat'
 import routes from './mongo/Request';
 
 
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 const server = http.createServer(app);
 
 // let currentApp = app;
