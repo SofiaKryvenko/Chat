@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { withRouter, Link } from 'react-router-dom'
 //img 
-import bg from '../../assets/img/pexels-photo-399161.jpeg'
+
 
 @withRouter
 @inject('auth')

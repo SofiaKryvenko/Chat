@@ -1,3 +1,8 @@
+import Room from './mongo/ShemaRooms'
+import User from './mongo/SchemaUser'
+import Message from './mongo/MessagesShema'
+
+
 
 class ChatServer {
  
@@ -7,18 +12,24 @@ class ChatServer {
 
   createConnection(io) {  
 
-  const users = {};
+    const users = {};
+    
    io.on('connection', function (socket) {
-
   console.log('connection to server from serverChat', socket.id)
-  //create new chat room
-    socket.on('create room', room => {
-    console.log('create room=',room)
-    socket.join(room)
-  })   
- 
-  //chatRoom leave
-  
+  //create new chat room (conversation)
+     socket.on('enter conversation', (conversation) => {
+       socket.join(conversation);
+       // console.log('joined ' + conversation);
+     });  
+  //chatRoom leave(conversation)
+     socket.on('leave conversation', (conversation) => {
+       socket.leave(conversation);
+       // console.log('left ' + conversation);
+     })
+  //send message in sertain conversation   
+     socket.on('new message', (conversation) => {
+       io.sockets.in(conversation).emit('refresh messages', conversation);
+     });
   
      
   //new user

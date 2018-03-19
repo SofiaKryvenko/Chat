@@ -10,7 +10,7 @@ import ChatServer from './serverChat'
 import routes from './mongo/Request';
 
 
-// const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')(session);
 const server = http.createServer(app);
 
 // let currentApp = app;
@@ -26,9 +26,9 @@ app.use(session({
   secret:process.env.RAZZLE_SESSION_SECRET,
   resave: false,
   saveUninitialized: true,//This will ensure the sessions are saved.
-  // store: new MongoStore({
-  //    mongoose.connections[0]
-  // })
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection 
+  })
   // store: new MongoStore({
   //   url: 'mongodb://chat:'
   //     + process.env.RAZZLE_MONGO_ATLAS_PW +
