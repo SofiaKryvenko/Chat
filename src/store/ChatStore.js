@@ -36,51 +36,18 @@ export  default class ChatStore{
     }) 
  }  
   
-  @action.bound
-  addNewUser(nickname,history) {
-    this.socket.emit('new user', nickname, data => {
-      if (data) {
-        history.push({
-          pathname: '/chat',
-       })
-      } else {
-        this.error_nickname='That username is already taken !'
-     }
-   }) 
-  }  
+  
  
   //send message to server
-  @action.bound
-  sendToServer(messsage) {  
-    this.socket.emit('send message', messsage)
-  }
 
-  @action.bound
-  sendPrivatMessage(to,fromUser,msg) {
-    this.socket.emit('send privat message',to,fromUser,msg)
-  }  
 
-  @action.bound
-  createNewChatRoom(roomName) {
-    this.socket.emit('create room',roomName)
-  }  
+
+
 
   @action.bound
   getDataFromsocket() {
-    //get messages
-    this.socket.on('receive message', (data) => {
-      this.list.push(data);
-    })
-    this.socket.on('to', data => {
-      console.log('privat',data)
-    })
-    //get list of nicknames
-    this.socket.on('nicknames', (data) => {
-      this.list_of_users = [];
-      console.log('list names', data)
-      for (let i = 0; i < data.length; i++)
-        this.list_of_users.push(data[i]);
-    })
+   
+
   }
 
   

@@ -32,10 +32,10 @@ export default class SendMessage extends Component{
   }
 
   onSubmit = (event: Event) => {
-    const { sendToServer } = this.props.chat;
+    // const { sendToServer } = this.props.chat;
     event.preventDefault();
     const message = this.input.value
-    sendToServer(message)
+    // sendToServer(message)
     this.input.value = ''  
   }
 

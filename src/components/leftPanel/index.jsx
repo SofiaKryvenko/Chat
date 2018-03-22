@@ -27,9 +27,7 @@ export default class LeftPanel extends Component{
   @action.bound
   createChatRoom(event: Event) {
     console.log('this click work');
-    const { createNewChatRoom } = this.props.chat;
     event.preventDefault();
-    createNewChatRoom(this.roomName);
     this.roomName = '';
     this.closeModal();
   }
