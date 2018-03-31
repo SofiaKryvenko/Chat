@@ -9,12 +9,15 @@ export default class AuthStore {
   @observable user = {
     username: '',
     password: '',
+    city:''
   }
 
   @observable login_data = {
     username: '',
     password: '',
   }
+
+  @observable profile ={}
 
   @observable errors={}
 
@@ -33,7 +36,7 @@ export default class AuthStore {
           this.clearObjData(this.user)
         });
         history.push({
-          pathname: '/chat'
+          pathname: '/home'
         })
       } else if (status === 404) {
         console.log(data)
@@ -50,12 +53,17 @@ export default class AuthStore {
       const { status, data } = await axios.post('/api/login', this.login_data)
       console.log(status,"status")
       if (status === 200) {
-        console.log('data=',data)
+        console.log('data=', data)
+        
+        localStorage.setItem('currentUser', data.username)
         runInAction(() => {
-          this.clearObjData(this.login_data)
+          this.clearObjData(this.login_data);
+          for (let key in data) {
+            this.profile[key] = data[key]
+          }
         });
         history.push({
-          pathname: '/chat'
+          pathname: '/home'
         })
       }else if (status === 403) {
         console.log(data);
@@ -73,6 +81,7 @@ export default class AuthStore {
     try {
       const { status } = await axios.get('/api/logout')
       if (status === 200) {
+        localStorage.removeItem('currentUser')
         history.push({
           pathname: '/signin'
         })
@@ -88,6 +97,7 @@ export default class AuthStore {
       obj[key]=''
     }
   }
+
 
 }
 

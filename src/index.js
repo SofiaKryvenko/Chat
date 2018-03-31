@@ -1,78 +1,61 @@
 import app from './server';
 import http from 'http';
-// import mongo from 'mongodb'
+// import promisify from 'util'
 import mongoose from 'mongoose'
-import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
 import session from 'express-session'
+import sio from 'express-socket.io-session'
 //
 import ChatServer from './serverChat'
-import routes from './mongo/Request';
+import routes from './mongo/Request'
 
-
-const MongoStore = require('connect-mongo')(session);
 const server = http.createServer(app);
+const io = require('socket.io')(server);
+const MongoStore = require('connect-mongo')(session);
 
-// let currentApp = app;
+
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 
+const sessions = session({
+    secret: 'secret',
+      resave: true,
+      saveUninitialized: true, //This will ensure the sessions are saved.
+      store: new MongoStore({
+        mongooseConnection: mongoose.connection
+      })
+    }
+)
+app.use(sessions)
+io.use(sio(sessions));
 
-//session
-
-app.use(session({
-  secret:process.env.RAZZLE_SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,//This will ensure the sessions are saved.
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection 
-  })
-  // store: new MongoStore({
-  //   url: 'mongodb://chat:'
-  //     + process.env.RAZZLE_MONGO_ATLAS_PW +
-  //     '@chat-shard-00-00-kdylc.mongodb.net:27017,chat-shard-00-01-kdylc.mongodb.net:27017,chat-shard-00-02-kdylc.mongodb.net:27017/test?ssl=true&replicaSet=chat-shard-0&authSource=admin'
-  // })
-}))
+const serverChat = new ChatServer();
+serverChat.createConnection(io)
 
 
-
-//SOCKET IO
-const io = require('socket.io')(server);
-const socketServer = new ChatServer();
-socketServer.createConnection(io)
-
-//MONGOOSE (MONGO_DB)
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://chat:'
-  + process.env.RAZZLE_MONGO_ATLAS_PW +
-  '@chat-shard-00-00-kdylc.mongodb.net:27017,chat-shard-00-01-kdylc.mongodb.net:27017,chat-shard-00-02-kdylc.mongodb.net:27017/test?ssl=true&replicaSet=chat-shard-0&authSource=admin', (err) => {
-  if (!err) {
-    //requests for bd
-    routes(app);
-    server.listen(process.env.PORT || 3000, (error) => {
-      if (error) {
-        console.log(error)
-      }
-      console.log('🚀 started')
-    });
-  } else {
-    return console.log('error with mongoDB=',err)
-  }
+mongoose.connect('mongodb://sofa:280297ck@ds223019.mlab.com:23019/chatbase')
+mongoose.connection.on('error', (err) => {
+  console.log('connection error:', err.message);
+});
+mongoose.connection.once('open', () => {
+  console.log("Connected to DB!");
+  
+  routes(app)
+  server.listen(process.env.PORT || 3000, (error) => {
+    if (error) {
+      console.log(error)
+    }
+    console.log('🚀 started')
   });
+});
 
 
 
 
-// if (module.hot) {
-//   console.log('✅  Server-side HMR Enabled!');
 
-//   module.hot.accept('./server', () => {
-//     console.log('🔁  HMR Reloading `./server`...');
-//     server.removeListener('request', currentApp);
-//     const newApp = require('./server').default;
-//     server.on('request', newApp);
-//     currentApp = newApp;
-//   });
-// }

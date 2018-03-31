@@ -1,0 +1,155 @@
+.home_main_wrap {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-image: url('../../assets/img/biology-blur.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    .home_header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        height: 70px;
+        position: fixed;
+        background: #c9c9c9;
+        .home_header_inner {
+            justify-content: space-between;
+            width: 80%;
+            display: flex;
+            align-items: center;
+            .header_title {
+                font-weight: bold;
+                font-size: 25px;
+                a{
+                    text-decoration: none;
+                }
+            }
+            .home_header-right {
+                padding-right: 30px;
+                display: flex;
+                .notification_img {
+                    padding: 0 10px;
+                    position: relative;
+                    margin-left: 4px;
+                    .notification_block {
+                        position: absolute;
+                        width: 300px;
+                        height: 300px;
+                        border: 1px solid #173e43;
+                        right: 16px;
+                        background: #fff;
+                        border-radius: 20px;
+                        padding: 10px;
+                        .notification_title {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 30px;
+                            background: #fae596;
+                            border-bottom: 1px solid #173e43;
+                            font-weight: 600;
+                        }
+                    }
+                    img {
+                        width: 24px;
+                        height: 24px;
+                        cursor: pointer;
+                    }
+                }
+                .member_header {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+    .home_container {
+        width: 80%;
+        padding-top: 95px;
+    }
+}
+
+// ========= COMPONENTS_HOME ============= //
+.all_user_wrapper {
+    display: flex;
+    padding: 10px;
+    .inputWrap {
+        display: flex;
+        justify-content: space-around;
+        .button {
+            outline: none;
+            height: 30px;
+            width: 90px;
+            border: none;
+            border-radius: 10px;
+            background: #c0dfd9;
+            font-weight: 600;
+            &:hover {
+                background: #5fe8ce;
+                cursor: pointer;
+            }
+        }
+    }
+    .search_wrapper {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        .search_container {
+            padding: 15px;
+            width: 400px;
+            border: 1px solid #173e43;
+            border-radius: 20px;
+            background: rgba(87, 143, 131, 0.342);
+            .search_by_name_title,
+            .search_by_city_title {
+                font-weight: 600;
+                color: #87f3b1;
+            }
+            .search_by_city_wrap {
+                padding-top: 15px;
+            }
+            .input_styled {
+                width: 200px;
+                outline: none;
+                height: 30px;
+                border: none;
+                padding: 0;
+                padding-left: 4px;
+                border-bottom: 1px solid #173e43;
+                background: transparent;
+                color: white;
+            }
+             ::-webkit-input-placeholder {
+                color: #fff;
+            }
+        }
+    }
+    .all_user_container {
+        width: 60%; // background: burlywood;
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        .user_wrap {
+            background: rgba(94, 210, 59, 0.342);
+            height: 90px;
+            width: 150px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            border-radius: 10px;
+            margin: 10px;
+            .user_container {}
+            .user_name,
+            .user_city {
+                padding-top: 5px;
+                width: 100%;
+            }
+        }
+    }
+}

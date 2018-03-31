@@ -5,18 +5,16 @@ class ChatServer {
   //   this.io = require('socket.io')(app);
   // }
 
+
   createConnection(io) {  
 
 
-    var handle = null;
-    var privateMsg = null;
-    var users = {};
-    var keys = {};
-
     
     io.on('connection', function (socket) {
-     
-  console.log('connection to server from serverChat', socket.id)
+
+      // const currentUser = localStorage.getItem('currentUser');
+      console.log('connection to server from serverChat', socket.handshake.headers)
+      console.log('connection to server from serverChat', socket.id)
   //create new chat room (conversation)
      socket.on('enter conversation', (conversation) => {
        socket.join(conversation);
@@ -36,14 +34,7 @@ class ChatServer {
   //all chatrooms
   socket.on('chatrooms', () => {})
   //users online
-  socket.on('users online', () => {})
- 
-  
-
- 
- 
-  
- 
+  socket.on('users online', () => {}) 
   //disconection
   //dont work on click   
   socket.on('disconnect', () => {

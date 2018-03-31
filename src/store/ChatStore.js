@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx'
 import io from 'socket.io-client';
-
+import axios from 'axios'
 
 
 export  default class ChatStore{
@@ -19,11 +19,26 @@ export  default class ChatStore{
   getDate(date) {
     return `${date.getHours()}:${('0'+date.getMinutes()).slice(-2)}`
   }
+
+
+  @action.bound
+  async getAllUsers() {
+    debugger
+    // try {
+    const { status, data } = await axios.get('/api/userss')
+    console.log('STATUSS====',status)
+    //   if (status === 200) {
+    //     console.log('data getAllUsers=', data)
+    //   }
+    // } catch (error) {
+    // }
+    
+  }  
   
 
   
  @action.bound
- clientConnection() {  
+ clientConnection() { 
    this.socket.on('connection', () => {
      console.log('connection to server chatStore')
    })
@@ -36,18 +51,9 @@ export  default class ChatStore{
     }) 
  }  
   
-  
- 
-  //send message to server
-
-
-
-
 
   @action.bound
   getDataFromsocket() {
-   
-
   }
 
   

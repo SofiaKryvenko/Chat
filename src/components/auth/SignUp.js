@@ -37,7 +37,7 @@ export default class SignUp extends Component {
           </div>
           <div className="login_form_row">
             <input
-              required  
+              required
               name='password'
               type="password"
               value={user.password}
@@ -45,6 +45,17 @@ export default class SignUp extends Component {
                 handleChange(event, 'user')
               }}
               placeholder='Enter your password...' />
+          </div>
+          <div className="login_form_row">
+            <input
+              required  
+              name='city'
+              type="text"
+              value={user.city}
+              onChange={(event) => {
+                handleChange(event, 'user')
+              }}
+              placeholder='Enter your city...' />
           </div>
 
           <div className="login_form_row">
